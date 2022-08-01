@@ -1,0 +1,86 @@
+body {
+  background-color: wheat;
+
+  .done-line-through {
+    text-decoration-line: line-through;
+  }
+
+  h1#todo-list {
+    text-align: center;
+    font-family: "Montserrat", sans-serif;
+  }
+  div#main-content {
+    margin: auto;
+    background-color: whitesmoke;
+    height: 50vh;
+    width: 50vw;
+
+    input#add-to-list {
+      margin: 5px;
+      height: 25px;
+      width: 250px;
+      border: 1px solid wheat;
+    }
+
+    input.edit-input {
+      margin-left: -3px;
+      height: 25px;
+      width: 175px;
+      border: 1px solid wheat;
+    }
+
+    input::placeholder {
+      color: lightgray;
+      padding-left: 5px;
+      margin-left: 5px;
+    }
+    button#add-btn {
+      height: 30px;
+      width: 100px;
+      background-color: white;
+      border: 1px solid wheat;
+    }
+
+    img.action-button {
+      padding-left: 15px;
+      height: 20px;
+      width: 20px;
+    }
+
+    img.action-button:hover {
+      cursor: pointer;
+    }
+
+    img.doneButton {
+      padding-left: 32%;
+    }
+
+    ul#todo-container {
+      padding-top: 10px;
+      list-style: none;
+
+      .edit-container {
+        width: 200px;
+        height: 100px;
+        background-color: yellow;
+        position: relative;
+        top: 50px;
+      }
+
+      li {
+        font-family: "Montserrat", sans-serif;
+        font-weight: 400;
+        margin: 10px 0;
+        width: 400px;
+      }
+
+      li.hidden {
+        display: none;
+      }
+
+      img.action-button.save-button {
+        margin-left: 80px;
+      }
+    }
+  }
+}
