@@ -2,37 +2,38 @@ const toDoList = ["Walk the Dog", "Buy Groceries", "Cook Dinner"];
 const addInput = document.querySelector("#add-to-list");
 const addButton = document.querySelector("#add-btn");
 const ul = document.querySelector("#todo-container");
-const insertAfter = (referenceNode, newNode) => {
-  referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-};
+// const insertAfter = (referenceNode, newNode) => {
+//   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
+// };
 
-// For edit functionality, maybe need to create an array with elements?
+const renderToDo = (todo) => {
+  const li = createListItemElement(todo, "todo-item", todo);
+  const doneButton = actionButton("./icons/check-square.svg", "doneButton");
+  const editButton = actionButton("./icons/edit.svg", "editButton");
+  const removeButton = actionButton("./icons/x.svg", "removeButton");
+
+  doneButton.addEventListener("click", function () {
+    markingDone(li);
+  });
+
+  editButton.addEventListener("click", function () {
+    li.classList.add("hidden");
+    editToDo(li.id);
+  });
+
+  removeButton.addEventListener("click", function () {
+    removeToDo(li);
+  });
+
+  li.appendChild(doneButton);
+  li.appendChild(editButton);
+  li.appendChild(removeButton);
+};
 
 const render = () => {
   ul.innerHTML = "";
-  toDoList.forEach((todo) => {
-    const li = createListItemElement(todo, "todo-item", todo);
-    const doneButton = actionButton("./icons/check-square.svg", "doneButton");
-    const editButton = actionButton("./icons/edit.svg", "editButton");
-    const removeButton = actionButton("./icons/x.svg", "removeButton");
 
-    doneButton.addEventListener("click", function () {
-      markingDone(li);
-    });
-
-    editButton.addEventListener("click", function () {
-      li.classList.add("hidden");
-      editToDo(li.id);
-    });
-
-    removeButton.addEventListener("click", function () {
-      removeToDo(li);
-    });
-
-    li.appendChild(doneButton);
-    li.appendChild(editButton);
-    li.appendChild(removeButton);
-  });
+  toDoList.forEach(renderToDo);
 };
 
 const actionButton = (src, cl) => {
@@ -51,10 +52,6 @@ const createListItemElement = (id, cl, html) => {
   ul.appendChild(el);
   return el;
 };
-
-// if  we click edit button for a todo
-// we want that li to be hidden
-// we want this new edit
 
 const createEditElement = (divId, placeholder, id) => {
   const save = actionButton("./icons/check.svg", "save-button");
@@ -90,7 +87,7 @@ const markingDone = (todo) => {
 const addToDo = (todo) => {
   toDoList.push(todo);
   addInput.value = "";
-  render();
+  renderToDo(todo);
 };
 
 addButton.addEventListener("click", function () {
