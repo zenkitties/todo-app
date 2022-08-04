@@ -2,32 +2,20 @@ const toDoList = ["Walk the Dog", "Buy Groceries", "Cook Dinner"];
 const addInput = document.querySelector("#add-to-list");
 const addButton = document.querySelector("#add-btn");
 const ul = document.querySelector("#todo-container");
-// const insertAfter = (referenceNode, newNode) => {
-//   referenceNode.parentNode.insertBefore(newNode, referenceNode.nextSibling);
-// };
+const div = document.createElement("div");
+const idNumber = Math.round(Math.random(100) * 100);
 
 const renderToDo = (todo) => {
-  const li = createListItemElement(todo, "todo-item", todo);
-  const doneButton = actionButton("./icons/check-square.svg", "doneButton");
-  const editButton = actionButton("./icons/edit.svg", "editButton");
-  const removeButton = actionButton("./icons/x.svg", "removeButton");
+  const li = createTodoElement(todo);
+  const editElDiv = createEditElement(
+    li,
+    todo,
+    `edit-input-id-${idNumber}`,
+    todo
+  );
 
-  doneButton.addEventListener("click", function () {
-    markingDone(li);
-  });
-
-  editButton.addEventListener("click", function () {
-    li.classList.add("hidden");
-    editToDo(li.id);
-  });
-
-  removeButton.addEventListener("click", function () {
-    removeToDo(li);
-  });
-
-  li.appendChild(doneButton);
-  li.appendChild(editButton);
-  li.appendChild(removeButton);
+  li.appendChild(editElDiv);
+  ul.appendChild(li);
 };
 
 const render = () => {
@@ -44,29 +32,89 @@ const actionButton = (src, cl) => {
   return el;
 };
 
-const createListItemElement = (id, cl, html) => {
-  const el = document.createElement("li");
-  el.setAttribute("id", id);
-  el.classList.add(cl);
-  el.innerHTML = html;
-  ul.appendChild(el);
-  return el;
+const createContainer = (id, cl) => {
+  const div = document.createElement("div");
+  div.setAttribute("id", id);
+  div.classList.add(cl);
+  return div;
 };
 
-const createEditElement = (divId, placeholder, id) => {
+const createListItemElement = (id, cl) => {
+  const li = document.createElement("li");
+  li.setAttribute("id", id);
+  li.classList.add(cl);
+  ul.appendChild(li);
+  return li;
+};
+
+const createTodoElement = (todo) => {
+  const doneButton = actionButton("./icons/check-square.svg", "doneButton");
+  const editButton = actionButton("./icons/edit.svg", "editButton");
+  const removeButton = actionButton("./icons/x.svg", "removeButton");
+  const span = document.createElement("span");
+  const div = createContainer(
+    `list-item-container-${idNumber}`,
+    "list-item-container"
+  );
+  const li = createListItemElement(todo, "list-item");
+  span.classList.add("todo-text");
+  span.innerHTML = todo;
+  div.appendChild(span);
+  div.appendChild(doneButton);
+  div.appendChild(editButton);
+  div.appendChild(removeButton);
+  li.appendChild(div);
+
+  doneButton.addEventListener("click", function () {
+    markingDone(li);
+  });
+
+  editButton.addEventListener("click", function () {
+    const el = document.getElementById(todo);
+    el.firstChild.classList.add("hidden");
+    el.lastChild.classList.remove("hidden");
+  });
+
+  removeButton.addEventListener("click", function () {
+    removeToDo(li);
+  });
+  return li;
+};
+
+const createEditElement = (li, placeholder, id, todo) => {
+  const el = document.getElementById(todo);
   const save = actionButton("./icons/check.svg", "save-button");
   const cancel = actionButton("./icons/x.svg", "cancel-edit-button");
-  const el = document.createElement("div");
-  el.id = divId;
-  el.setAttribute("class", "edit-container");
-  let input = document.createElement("input");
+  const input = document.createElement("input");
+  const editDiv = createContainer(`edit-todo-${idNumber}`, "edit-container");
   input.setAttribute("placeholder", placeholder);
-  input.id = id;
-  input.setAttribute("class", "edit-input");
-  el.appendChild(input);
-  insertAfter(input, save);
-  insertAfter(save, cancel);
-  return el;
+  input.setAttribute("id", id);
+  input.classList.add("edit-input");
+  editDiv.classList.add("hidden");
+  editDiv.appendChild(input);
+  editDiv.appendChild(save);
+  editDiv.appendChild(cancel);
+  li.appendChild(editDiv);
+
+  cancel.addEventListener("click", function () {
+    el.firstChild.classList.remove("hidden");
+    el.lastChild.classList.add("hidden");
+    input.value = "";
+  });
+
+  save.addEventListener("click", function () {
+    if (input.value === "") {
+      el.firstChild.classList.remove("hidden");
+      el.lastChild.classList.add("hidden");
+    } else {
+      toDoList.splice(toDoList.indexOf(el.id), 1, input.value);
+      render();
+      el.firstChild.classList.remove("hidden");
+      el.lastChild.classList.add("hidden");
+    }
+  });
+
+  return editDiv;
 };
 
 const editToDo = (todo) => {

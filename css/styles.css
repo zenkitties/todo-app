@@ -14,6 +14,9 @@ body div#main-content {
   height: 50vh;
   width: 50vw;
 }
+body div#main-content input {
+  padding-left: 10px;
+}
 body div#main-content input#add-to-list {
   margin: 5px;
   height: 25px;
@@ -21,15 +24,14 @@ body div#main-content input#add-to-list {
   border: 1px solid wheat;
 }
 body div#main-content input.edit-input {
-  margin-left: -3px;
-  height: 25px;
-  width: 175px;
+  height: 30px;
+  width: 250px;
   border: 1px solid wheat;
 }
 body div#main-content input::placeholder {
   color: lightgray;
-  padding-left: 5px;
   margin-left: 5px;
+  font-size: 16px;
 }
 body div#main-content button#add-btn {
   height: 30px;
@@ -46,30 +48,32 @@ body div#main-content img.action-button:hover {
   cursor: pointer;
 }
 body div#main-content img.doneButton {
-  padding-left: 32%;
+  padding-left: 27%;
+}
+body div#main-content img.action-button.save-button {
+  margin-left: 5%;
 }
 body div#main-content ul#todo-container {
-  padding-top: 10px;
+  padding: 0;
   list-style: none;
 }
-body div#main-content ul#todo-container .edit-container {
-  width: 200px;
-  height: 100px;
-  background-color: yellow;
-  position: relative;
-  top: 50px;
+body div#main-content ul#todo-container .edit-container,
+body div#main-content ul#todo-container .list-item-container {
+  padding-top: 10px;
+  padding-left: 10px;
+  display: flex;
+  height: 50px;
+}
+body div#main-content ul#todo-container .todo-text {
+  flex-basis: 43%;
 }
 body div#main-content ul#todo-container li {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
-  margin: 10px 0;
   width: 400px;
 }
-body div#main-content ul#todo-container li.hidden {
+body div#main-content ul#todo-container .hidden {
   display: none;
-}
-body div#main-content ul#todo-container img.action-button.save-button {
-  margin-left: 80px;
 }
 
 /*# sourceMappingURL=styles.css.map */
