@@ -1,4 +1,4 @@
-const toDoList = ["Walk the Dog", "Buy Groceries", "Cook Dinner"];
+const toDoList = [];
 const addInput = document.querySelector("#add-to-list");
 const addButton = document.querySelector("#add-btn");
 const ul = document.querySelector("#todo-container");
